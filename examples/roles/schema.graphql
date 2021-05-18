@@ -514,6 +514,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allTodosCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allTodosCount(where: TodoWhereInput! = {}): Int!
 
   """
    Search for all Person items which match the where clause.
@@ -543,6 +551,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allPeopleCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allPeopleCount(where: PersonWhereInput! = {}): Int!
 
   """
    Search for all Role items which match the where clause.
@@ -572,6 +588,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allRolesCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allRolesCount(where: RoleWhereInput! = {}): Int!
   authenticatedItem: AuthenticatedItem
   keystone: KeystoneMeta!
 }

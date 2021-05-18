@@ -356,6 +356,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allTasksCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allTasksCount(where: TaskWhereInput! = {}): Int!
 
   """
    Search for all Person items which match the where clause.
@@ -385,6 +393,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allPeopleCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allPeopleCount(where: PersonWhereInput! = {}): Int!
   authenticatedItem: AuthenticatedItem
   keystone: KeystoneMeta!
 }

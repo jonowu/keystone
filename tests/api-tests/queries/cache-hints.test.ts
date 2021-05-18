@@ -152,16 +152,10 @@ multiAdapterRunners().map(({ runner, provider }) =>
           expect(data).toHaveProperty('allUsers');
           expect(res.headers['cache-control']).toBe('max-age=10, private');
 
-          // Meta query
+          // Count query
           ({ data, errors, res } = await networkedGraphqlRequest({
             app,
-            query: `
-              query {
-                userCount: _allUsersMeta {
-                  count
-                }
-              }
-            `,
+            query: `query { userCount: allUsersCount }`,
           }));
 
           expect(errors).toBe(undefined);

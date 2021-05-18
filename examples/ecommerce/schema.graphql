@@ -1227,6 +1227,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allUsersCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allUsersCount(where: UserWhereInput! = {}): Int!
 
   """
    Search for all Product items which match the where clause.
@@ -1256,6 +1264,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allProductsCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allProductsCount(where: ProductWhereInput! = {}): Int!
 
   """
    Search for all ProductImage items which match the where clause.
@@ -1285,6 +1301,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allProductImagesCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allProductImagesCount(where: ProductImageWhereInput! = {}): Int!
 
   """
    Search for all CartItem items which match the where clause.
@@ -1314,6 +1338,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allCartItemsCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allCartItemsCount(where: CartItemWhereInput! = {}): Int!
 
   """
    Search for all OrderItem items which match the where clause.
@@ -1343,6 +1375,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allOrderItemsCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allOrderItemsCount(where: OrderItemWhereInput! = {}): Int!
 
   """
    Search for all Order items which match the where clause.
@@ -1372,6 +1412,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allOrdersCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allOrdersCount(where: OrderWhereInput! = {}): Int!
 
   """
    Search for all Role items which match the where clause.
@@ -1401,6 +1449,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allRolesCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allRolesCount(where: RoleWhereInput! = {}): Int!
   authenticatedItem: AuthenticatedItem
   validateUserPasswordResetToken(
     email: String!

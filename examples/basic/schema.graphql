@@ -572,6 +572,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allUsersCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allUsersCount(where: UserWhereInput! = {}): Int!
 
   """
    Search for all PhoneNumber items which match the where clause.
@@ -601,6 +609,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allPhoneNumbersCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allPhoneNumbersCount(where: PhoneNumberWhereInput! = {}): Int!
 
   """
    Search for all Post items which match the where clause.
@@ -630,6 +646,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allPostsCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allPostsCount(where: PostWhereInput! = {}): Int!
   authenticatedItem: AuthenticatedItem
   randomNumber: RandomNumber
   keystone: KeystoneMeta!

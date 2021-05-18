@@ -54,6 +54,7 @@ export function getGqlNames({
     itemQueryName: _itemQueryName,
     listQueryName: `all${_listQueryName}`,
     listQueryMetaName: `_all${_listQueryName}Meta`,
+    listQueryCountName: `all${_listQueryName}Count`,
     listSortName: `Sort${_listQueryName}By`,
     deleteMutationName: `delete${_itemQueryName}`,
     updateMutationName: `update${_itemQueryName}`,

@@ -153,6 +153,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allPostsCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allPostsCount(where: PostWhereInput! = {}): Int!
   keystone: KeystoneMeta!
 }
 

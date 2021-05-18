@@ -191,6 +191,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allUsersCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allUsersCount(where: UserWhereInput! = {}): Int!
   authenticatedItem: AuthenticatedItem
   keystone: KeystoneMeta!
 }

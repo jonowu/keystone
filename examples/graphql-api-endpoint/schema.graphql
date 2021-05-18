@@ -556,6 +556,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allUsersCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allUsersCount(where: UserWhereInput! = {}): Int!
 
   """
    Search for all Post items which match the where clause.
@@ -585,6 +593,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allPostsCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allPostsCount(where: PostWhereInput! = {}): Int!
 
   """
    Search for all Tag items which match the where clause.
@@ -614,6 +630,14 @@ type Query {
     first: Int
     skip: Int
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use allTagsCount instead."
+    )
+
+  """
+   Count the number of items that match the where clause
+  """
+  allTagsCount(where: TagWhereInput! = {}): Int!
   authenticatedItem: AuthenticatedItem
   keystone: KeystoneMeta!
 }

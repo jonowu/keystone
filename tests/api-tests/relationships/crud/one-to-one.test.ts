@@ -900,7 +900,7 @@ multiAdapterRunners().map(({ runner, provider }) =>
             const { location, company } = await createCompanyAndLocation(context);
 
             // Run the query with a null operation
-            const _company = await context.lists.Company.updateOne({
+            await context.lists.Company.updateOne({
               id: company.id,
               data: { location: null },
               query: 'id location { id name }',
@@ -920,7 +920,7 @@ multiAdapterRunners().map(({ runner, provider }) =>
             const { location, company } = await createLocationAndCompany(context);
 
             // Run the query with a null operation
-            const _location = await context.lists.Location.updateOne({
+            await context.lists.Location.updateOne({
               id: location.id,
               data: { company: null },
               query: 'id company { id name }',

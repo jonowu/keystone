@@ -411,7 +411,7 @@ multiAdapterRunners().map(({ runner, provider }) =>
             const { user, friend } = await createUserAndFriend(context);
 
             // Run the query with a null operation
-            const _user = await context.lists.User.updateOne({
+            await context.lists.User.updateOne({
               id: user.id,
               data: { friend: null },
               query: 'id friend { id name }',

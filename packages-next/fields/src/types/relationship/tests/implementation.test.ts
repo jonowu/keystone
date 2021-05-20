@@ -34,7 +34,8 @@ class MockList {
     relateToOneForCreateInputName: string;
     whereUniqueInputName: string;
     createInputName: string;
-    relateToManyInputName: string;
+    relateToManyForUpdateInputName: string;
+    relateToManyForCreateInputName: string;
     whereInputName: string;
     outputTypeName: string;
     listQueryName: string;
@@ -53,7 +54,8 @@ class MockList {
       outputTypeName: ref,
       createInputName: `${ref}CreateInput`,
       whereUniqueInputName: `${ref}WhereUniqueInput`,
-      relateToManyInputName: `${ref}RelateToManyInput`,
+      relateToManyForUpdateInputName: `${ref}RelateToManyForUpdateInput`,
+      relateToManyForCreateInputName: `${ref}RelateToManyForCreateInput`,
       relateToOneForUpdateInputName: `${ref}RelateToOneForUpdateInput`,
       relateToOneForCreateInputName: `${ref}RelateToOneForCreateInput`,
       whereInputName: '',

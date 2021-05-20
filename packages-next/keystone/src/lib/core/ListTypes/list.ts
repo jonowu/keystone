@@ -612,10 +612,12 @@ export class List implements BaseKeystoneList {
       field => field.isRelationship
     ) as Relationship<any>[];
     const resolvedRelationships = await mapToFields(fields, async field => {
-      // Treat `null` as `undefined`, e.g. a no-op
-      if (data[field.path] === null) return undefined;
+      // Treat `null` as `disconnect` for single operations.
+      let operations = data[field.path];
+      if (operations === null && !field.many) operations = { disconnectAll: true };
+      if (operations === null) return undefined;
       const { create, connect, disconnect, currentValue } = await field.resolveNestedOperations(
-        data[field.path],
+        operations,
         existingItem,
         context,
         mutationState

@@ -92,19 +92,6 @@ multiAdapterRunners().map(({ runner, provider }) =>
           expect(user).toMatchObject({ id: expect.any(String), notes: [] });
         })
       );
-
-      test.skip(
-        'silently succeeds if used during create',
-        runner(setupKeystone, async ({ context }) => {
-          // Create an item that does the linking
-          const user = await context.lists.User.createOne({
-            data: { notes: { disconnectAll: true } },
-            query: 'id notes { id }',
-          });
-
-          expect(user).toMatchObject({ id: expect.any(String), notes: [] });
-        })
-      );
     });
 
     describe('with access control', () => {

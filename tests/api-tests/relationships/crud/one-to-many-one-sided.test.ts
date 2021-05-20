@@ -281,48 +281,6 @@ multiAdapterRunners().map(({ runner, provider }) =>
           })
         );
 
-        test.skip(
-          'With disconnect',
-          runner(setupKeystone, async ({ context }) => {
-            // Manually setup a connected Company <-> Location
-            const { location, company } = await createCompanyAndLocation(context);
-
-            // Run the query to disconnect the location from company
-            const _company = await context.lists.Company.updateOne({
-              id: company.id,
-              data: { location: { disconnect: { id: location.id } } },
-              query: 'id location { id name }',
-            });
-            expect(_company.id).toEqual(company.id);
-            expect(_company.location).toBe(null);
-
-            // Check the link has been broken
-            const result = await getCompanyAndLocation(context, company.id, location.id);
-            expect(result.Company.location).toBe(null);
-          })
-        );
-
-        test.skip(
-          'With disconnectAll',
-          runner(setupKeystone, async ({ context }) => {
-            // Manually setup a connected Company <-> Location
-            const { location, company } = await createCompanyAndLocation(context);
-
-            // Run the query to disconnect the location from company
-            const _company = await context.lists.Company.updateOne({
-              id: company.id,
-              data: { location: { disconnectAll: true } },
-              query: 'id location { id name }',
-            });
-            expect(_company.id).toEqual(company.id);
-            expect(_company.location).toBe(null);
-
-            // Check the link has been broken
-            const result = await getCompanyAndLocation(context, company.id, location.id);
-            expect(result.Company.location).toBe(null);
-          })
-        );
-
         test(
           'With null',
           runner(setupKeystone, async ({ context }) => {

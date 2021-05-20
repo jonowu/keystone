@@ -238,48 +238,6 @@ multiAdapterRunners().map(({ runner, provider }) =>
           })
         );
 
-        test.skip(
-          'With disconnect',
-          runner(setupKeystone, async ({ context }) => {
-            // Manually setup a connected Company <-> Location
-            const { friend, user } = await createUserAndFriend(context);
-
-            // Run the query to disconnect the location from company
-            const _user = await context.lists.User.updateOne({
-              id: user.id,
-              data: { friend: { disconnect: { id: friend.id } } },
-              query: 'id friend { id name }',
-            });
-            expect(_user.id).toEqual(user.id);
-            expect(_user.friend).toBe(null);
-
-            // Check the link has been broken
-            const result = await getUserAndFriend(context, user.id, friend.id);
-            expect(result.User.friend).toBe(null);
-          })
-        );
-
-        test.skip(
-          'With disconnectAll',
-          runner(setupKeystone, async ({ context }) => {
-            // Manually setup a connected Company <-> Location
-            const { friend, user } = await createUserAndFriend(context);
-
-            // Run the query to disconnect the location from company
-            const _user = await context.lists.User.updateOne({
-              id: user.id,
-              data: { friend: { disconnectAll: true } },
-              query: 'id friend { id name }',
-            });
-            expect(_user.id).toEqual(user.id);
-            expect(_user.friend).toBe(null);
-
-            // Check the link has been broken
-            const result = await getUserAndFriend(context, user.id, friend.id);
-            expect(result.User.friend).toBe(null);
-          })
-        );
-
         test(
           'With null',
           runner(setupKeystone, async ({ context }) => {

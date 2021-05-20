@@ -95,20 +95,6 @@ multiAdapterRunners().map(({ runner, provider }) =>
           });
         })
       );
-
-      test.skip(
-        'silently succeeds if used during create',
-        runner(setupKeystone, async ({ context }) => {
-          const FAKE_ID = '5b84f38256d3c2df59a0d9bf';
-
-          // Create an item that does the linking
-          const user = await context.lists.User.createOne({
-            data: { notes: { disconnect: [{ id: FAKE_ID }] } },
-            query: 'id notes { id content }',
-          });
-          expect(user).toMatchObject({ id: expect.any(String), notes: [] });
-        })
-      );
     });
 
     describe('non-matching filter', () => {

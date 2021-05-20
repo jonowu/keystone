@@ -87,61 +87,20 @@ multiAdapterRunners().map(({ runner, provider }) =>
         })
       );
 
-      test.skip(
-        'silently succeeds if used during create',
-        runner(setupKeystone, async ({ context }) => {
-          const FAKE_ID = '5b84f38256d3c2df59a0d9bf';
-
-          // Create an item that does the linking
-          const event = await context.lists.Event.createOne({
-            data: { group: { disconnect: { id: FAKE_ID } } },
-            query: 'id group { id }',
-          });
-
-          expect(event).toMatchObject({ id: expect.any(String), group: null });
-        })
-      );
-
-      test.skip(
+      test(
         'silently succeeds if no item to disconnect during update',
         runner(setupKeystone, async ({ context }) => {
-          const FAKE_ID = '5b84f38256d3c2df59a0d9bf';
-
           // Create an item to link against
           const createEvent = await context.lists.Event.createOne({ data: {} });
 
           // Create an item that does the linking
           const event = await context.lists.Event.updateOne({
             id: createEvent.id,
-            data: { group: { disconnect: { id: FAKE_ID } } },
+            data: { group: null },
             query: 'id group { id }',
           });
 
           expect(event).toMatchObject({ id: expect.any(String), group: null });
-          expect(event).not.toHaveProperty('errors');
-        })
-      );
-
-      test.skip(
-        'silently succeeds if item to disconnect does not match during update',
-        runner(setupKeystone, async ({ context }) => {
-          const groupName = `foo${sampleOne(alphanumGenerator)}`;
-          const FAKE_ID = '5b84f38256d3c2df59a0d9bf';
-
-          // Create an item to link against
-          const createGroup = await context.lists.Group.createOne({ data: { name: groupName } });
-          const createEvent = await context.lists.Event.createOne({
-            data: { group: { connect: { id: createGroup.id } } },
-          });
-
-          // Create an item that does the linking
-          const event = await context.lists.Event.updateOne({
-            id: createEvent.id,
-            data: { group: { disconnect: { id: FAKE_ID } } },
-            query: 'id group { id }',
-          });
-
-          expect(event).toMatchObject({ id: expect.any(String), group: { id: createGroup.id } });
           expect(event).not.toHaveProperty('errors');
         })
       );

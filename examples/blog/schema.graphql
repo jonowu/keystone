@@ -320,10 +320,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allPostsCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allPostsCount(where: PostWhereInput! = {}): Int!
 
   """
@@ -357,10 +353,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allAuthorsCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allAuthorsCount(where: AuthorWhereInput! = {}): Int!
   keystone: KeystoneMeta!
 }

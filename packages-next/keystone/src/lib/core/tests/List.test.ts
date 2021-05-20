@@ -532,8 +532,7 @@ describe(`getGqlQueries()`, () => {
           first: Int
           skip: Int
         ): _QueryMeta @deprecated(reason: \"This query will be removed in a future version. Please use allTestsCount instead.\")`,
-        `""" Count the number of items that match the where clause """
-          allTestsCount(where: TestWhereInput! = {}): Int!`,
+        `allTestsCount(where: TestWhereInput! = {}): Int!`,
       ].map(normalise)
     );
   });

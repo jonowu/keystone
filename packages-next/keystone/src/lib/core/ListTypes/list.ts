@@ -1125,7 +1125,6 @@ export class List implements BaseKeystoneList {
         } instead.")`,
 
         `
-        """ Count the number of items that match the where clause """
         ${this.gqlNames.listQueryCountName}(${`where: ${this.gqlNames.whereInputName}! = {}`}): Int!
         `
       );

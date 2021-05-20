@@ -1230,10 +1230,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allUsersCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allUsersCount(where: UserWhereInput! = {}): Int!
 
   """
@@ -1267,10 +1263,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allProductsCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allProductsCount(where: ProductWhereInput! = {}): Int!
 
   """
@@ -1304,10 +1296,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allProductImagesCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allProductImagesCount(where: ProductImageWhereInput! = {}): Int!
 
   """
@@ -1341,10 +1329,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allCartItemsCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allCartItemsCount(where: CartItemWhereInput! = {}): Int!
 
   """
@@ -1378,10 +1362,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allOrderItemsCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allOrderItemsCount(where: OrderItemWhereInput! = {}): Int!
 
   """
@@ -1415,10 +1395,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allOrdersCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allOrdersCount(where: OrderWhereInput! = {}): Int!
 
   """
@@ -1452,10 +1428,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allRolesCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allRolesCount(where: RoleWhereInput! = {}): Int!
   authenticatedItem: AuthenticatedItem
   validateUserPasswordResetToken(

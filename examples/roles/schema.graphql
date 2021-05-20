@@ -517,10 +517,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allTodosCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allTodosCount(where: TodoWhereInput! = {}): Int!
 
   """
@@ -554,10 +550,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allPeopleCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allPeopleCount(where: PersonWhereInput! = {}): Int!
 
   """
@@ -591,10 +583,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allRolesCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allRolesCount(where: RoleWhereInput! = {}): Int!
   authenticatedItem: AuthenticatedItem
   keystone: KeystoneMeta!

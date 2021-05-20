@@ -575,10 +575,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allUsersCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allUsersCount(where: UserWhereInput! = {}): Int!
 
   """
@@ -612,10 +608,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allPhoneNumbersCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allPhoneNumbersCount(where: PhoneNumberWhereInput! = {}): Int!
 
   """
@@ -649,10 +641,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allPostsCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allPostsCount(where: PostWhereInput! = {}): Int!
   authenticatedItem: AuthenticatedItem
   randomNumber: RandomNumber

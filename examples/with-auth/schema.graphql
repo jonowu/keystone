@@ -359,10 +359,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allTasksCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allTasksCount(where: TaskWhereInput! = {}): Int!
 
   """
@@ -396,10 +392,6 @@ type Query {
     @deprecated(
       reason: "This query will be removed in a future version. Please use allPeopleCount instead."
     )
-
-  """
-   Count the number of items that match the where clause
-  """
   allPeopleCount(where: PersonWhereInput! = {}): Int!
   authenticatedItem: AuthenticatedItem
   keystone: KeystoneMeta!

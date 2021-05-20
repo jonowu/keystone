@@ -1,29 +1,47 @@
-input CartItemRelateToManyInput {
-  create: [CartItemCreateInput]
-  connect: [CartItemWhereUniqueInput]
-  disconnect: [CartItemWhereUniqueInput]
-  disconnectAll: Boolean
+input CartItemRelateToManyForUpdateInput {
+  create: [CartItemCreateInput!]! = []
+  connect: [CartItemWhereUniqueInput!]! = []
+  disconnect: [CartItemWhereUniqueInput!]! = []
+  disconnectAll: Boolean! = false
 }
 
-input OrderRelateToManyInput {
-  create: [OrderCreateInput]
-  connect: [OrderWhereUniqueInput]
-  disconnect: [OrderWhereUniqueInput]
-  disconnectAll: Boolean
+input CartItemRelateToManyForCreateInput {
+  create: [CartItemCreateInput!]! = []
+  connect: [CartItemWhereUniqueInput!]! = []
 }
 
-input RoleRelateToOneInput {
+input OrderRelateToManyForUpdateInput {
+  create: [OrderCreateInput!]! = []
+  connect: [OrderWhereUniqueInput!]! = []
+  disconnect: [OrderWhereUniqueInput!]! = []
+  disconnectAll: Boolean! = false
+}
+
+input OrderRelateToManyForCreateInput {
+  create: [OrderCreateInput!]! = []
+  connect: [OrderWhereUniqueInput!]! = []
+}
+
+input RoleRelateToOneForUpdateInput {
   create: RoleCreateInput
   connect: RoleWhereUniqueInput
-  disconnect: RoleWhereUniqueInput
-  disconnectAll: Boolean
 }
 
-input ProductRelateToManyInput {
-  create: [ProductCreateInput]
-  connect: [ProductWhereUniqueInput]
-  disconnect: [ProductWhereUniqueInput]
-  disconnectAll: Boolean
+input RoleRelateToOneForCreateInput {
+  create: RoleCreateInput
+  connect: RoleWhereUniqueInput
+}
+
+input ProductRelateToManyForUpdateInput {
+  create: [ProductCreateInput!]! = []
+  connect: [ProductWhereUniqueInput!]! = []
+  disconnect: [ProductWhereUniqueInput!]! = []
+  disconnectAll: Boolean! = false
+}
+
+input ProductRelateToManyForCreateInput {
+  create: [ProductCreateInput!]! = []
+  connect: [ProductWhereUniqueInput!]! = []
 }
 
 """
@@ -199,10 +217,10 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
-  cart: CartItemRelateToManyInput
-  orders: OrderRelateToManyInput
-  role: RoleRelateToOneInput
-  products: ProductRelateToManyInput
+  cart: CartItemRelateToManyForUpdateInput
+  orders: OrderRelateToManyForUpdateInput
+  role: RoleRelateToOneForUpdateInput
+  products: ProductRelateToManyForUpdateInput
   passwordResetToken: String
   passwordResetIssuedAt: String
   passwordResetRedeemedAt: String
@@ -217,10 +235,10 @@ input UserCreateInput {
   name: String
   email: String
   password: String
-  cart: CartItemRelateToManyInput
-  orders: OrderRelateToManyInput
-  role: RoleRelateToOneInput
-  products: ProductRelateToManyInput
+  cart: CartItemRelateToManyForCreateInput
+  orders: OrderRelateToManyForCreateInput
+  role: RoleRelateToOneForCreateInput
+  products: ProductRelateToManyForCreateInput
   passwordResetToken: String
   passwordResetIssuedAt: String
   passwordResetRedeemedAt: String
@@ -230,18 +248,24 @@ input UsersCreateInput {
   data: UserCreateInput
 }
 
-input ProductImageRelateToOneInput {
+input ProductImageRelateToOneForUpdateInput {
   create: ProductImageCreateInput
   connect: ProductImageWhereUniqueInput
-  disconnect: ProductImageWhereUniqueInput
-  disconnectAll: Boolean
 }
 
-input UserRelateToOneInput {
+input ProductImageRelateToOneForCreateInput {
+  create: ProductImageCreateInput
+  connect: ProductImageWhereUniqueInput
+}
+
+input UserRelateToOneForUpdateInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
-  disconnect: UserWhereUniqueInput
-  disconnectAll: Boolean
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 """
@@ -318,10 +342,10 @@ enum SortProductsBy {
 input ProductUpdateInput {
   name: String
   description: String
-  photo: ProductImageRelateToOneInput
+  photo: ProductImageRelateToOneForUpdateInput
   status: String
   price: Int
-  user: UserRelateToOneInput
+  user: UserRelateToOneForUpdateInput
 }
 
 input ProductsUpdateInput {
@@ -332,10 +356,10 @@ input ProductsUpdateInput {
 input ProductCreateInput {
   name: String
   description: String
-  photo: ProductImageRelateToOneInput
+  photo: ProductImageRelateToOneForCreateInput
   status: String
   price: Int
-  user: UserRelateToOneInput
+  user: UserRelateToOneForCreateInput
 }
 
 input ProductsCreateInput {
@@ -392,11 +416,14 @@ input CloudinaryImageFormat {
   transformation: String
 }
 
-input ProductRelateToOneInput {
+input ProductRelateToOneForUpdateInput {
   create: ProductCreateInput
   connect: ProductWhereUniqueInput
-  disconnect: ProductWhereUniqueInput
-  disconnectAll: Boolean
+}
+
+input ProductRelateToOneForCreateInput {
+  create: ProductCreateInput
+  connect: ProductWhereUniqueInput
 }
 
 """
@@ -448,7 +475,7 @@ enum SortProductImagesBy {
 input ProductImageUpdateInput {
   image: Upload
   altText: String
-  product: ProductRelateToOneInput
+  product: ProductRelateToOneForUpdateInput
 }
 
 input ProductImagesUpdateInput {
@@ -459,7 +486,7 @@ input ProductImagesUpdateInput {
 input ProductImageCreateInput {
   image: Upload
   altText: String
-  product: ProductRelateToOneInput
+  product: ProductRelateToOneForCreateInput
 }
 
 input ProductImagesCreateInput {
@@ -514,8 +541,8 @@ enum SortCartItemsBy {
 
 input CartItemUpdateInput {
   quantity: Int
-  product: ProductRelateToOneInput
-  user: UserRelateToOneInput
+  product: ProductRelateToOneForUpdateInput
+  user: UserRelateToOneForUpdateInput
 }
 
 input CartItemsUpdateInput {
@@ -525,19 +552,22 @@ input CartItemsUpdateInput {
 
 input CartItemCreateInput {
   quantity: Int
-  product: ProductRelateToOneInput
-  user: UserRelateToOneInput
+  product: ProductRelateToOneForCreateInput
+  user: UserRelateToOneForCreateInput
 }
 
 input CartItemsCreateInput {
   data: CartItemCreateInput
 }
 
-input OrderRelateToOneInput {
+input OrderRelateToOneForUpdateInput {
   create: OrderCreateInput
   connect: OrderWhereUniqueInput
-  disconnect: OrderWhereUniqueInput
-  disconnectAll: Boolean
+}
+
+input OrderRelateToOneForCreateInput {
+  create: OrderCreateInput
+  connect: OrderWhereUniqueInput
 }
 
 """
@@ -618,10 +648,10 @@ enum SortOrderItemsBy {
 input OrderItemUpdateInput {
   name: String
   description: String
-  photo: ProductImageRelateToOneInput
+  photo: ProductImageRelateToOneForUpdateInput
   price: Int
   quantity: Int
-  order: OrderRelateToOneInput
+  order: OrderRelateToOneForUpdateInput
 }
 
 input OrderItemsUpdateInput {
@@ -632,21 +662,26 @@ input OrderItemsUpdateInput {
 input OrderItemCreateInput {
   name: String
   description: String
-  photo: ProductImageRelateToOneInput
+  photo: ProductImageRelateToOneForCreateInput
   price: Int
   quantity: Int
-  order: OrderRelateToOneInput
+  order: OrderRelateToOneForCreateInput
 }
 
 input OrderItemsCreateInput {
   data: OrderItemCreateInput
 }
 
-input OrderItemRelateToManyInput {
-  create: [OrderItemCreateInput]
-  connect: [OrderItemWhereUniqueInput]
-  disconnect: [OrderItemWhereUniqueInput]
-  disconnectAll: Boolean
+input OrderItemRelateToManyForUpdateInput {
+  create: [OrderItemCreateInput!]! = []
+  connect: [OrderItemWhereUniqueInput!]! = []
+  disconnect: [OrderItemWhereUniqueInput!]! = []
+  disconnectAll: Boolean! = false
+}
+
+input OrderItemRelateToManyForCreateInput {
+  create: [OrderItemCreateInput!]! = []
+  connect: [OrderItemWhereUniqueInput!]! = []
 }
 
 """
@@ -735,8 +770,8 @@ enum SortOrdersBy {
 
 input OrderUpdateInput {
   total: Int
-  items: OrderItemRelateToManyInput
-  user: UserRelateToOneInput
+  items: OrderItemRelateToManyForUpdateInput
+  user: UserRelateToOneForUpdateInput
   charge: String
 }
 
@@ -747,8 +782,8 @@ input OrdersUpdateInput {
 
 input OrderCreateInput {
   total: Int
-  items: OrderItemRelateToManyInput
-  user: UserRelateToOneInput
+  items: OrderItemRelateToManyForCreateInput
+  user: UserRelateToOneForCreateInput
   charge: String
 }
 
@@ -756,11 +791,16 @@ input OrdersCreateInput {
   data: OrderCreateInput
 }
 
-input UserRelateToManyInput {
-  create: [UserCreateInput]
-  connect: [UserWhereUniqueInput]
-  disconnect: [UserWhereUniqueInput]
-  disconnectAll: Boolean
+input UserRelateToManyForUpdateInput {
+  create: [UserCreateInput!]! = []
+  connect: [UserWhereUniqueInput!]! = []
+  disconnect: [UserWhereUniqueInput!]! = []
+  disconnectAll: Boolean! = false
+}
+
+input UserRelateToManyForCreateInput {
+  create: [UserCreateInput!]! = []
+  connect: [UserWhereUniqueInput!]! = []
 }
 
 """
@@ -870,7 +910,7 @@ input RoleUpdateInput {
   canManageRoles: Boolean
   canManageCart: Boolean
   canManageOrders: Boolean
-  assignedTo: UserRelateToManyInput
+  assignedTo: UserRelateToManyForUpdateInput
 }
 
 input RolesUpdateInput {
@@ -886,7 +926,7 @@ input RoleCreateInput {
   canManageRoles: Boolean
   canManageCart: Boolean
   canManageOrders: Boolean
-  assignedTo: UserRelateToManyInput
+  assignedTo: UserRelateToManyForCreateInput
 }
 
 input RolesCreateInput {

@@ -1,8 +1,13 @@
-input PostRelateToManyInput {
-  create: [PostCreateInput]
-  connect: [PostWhereUniqueInput]
-  disconnect: [PostWhereUniqueInput]
-  disconnectAll: Boolean
+input PostRelateToManyForUpdateInput {
+  create: [PostCreateInput!]! = []
+  connect: [PostWhereUniqueInput!]! = []
+  disconnect: [PostWhereUniqueInput!]! = []
+  disconnectAll: Boolean! = false
+}
+
+input PostRelateToManyForCreateInput {
+  create: [PostCreateInput!]! = []
+  connect: [PostWhereUniqueInput!]! = []
 }
 
 """
@@ -113,7 +118,7 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
-  posts: PostRelateToManyInput
+  posts: PostRelateToManyForUpdateInput
 }
 
 input UsersUpdateInput {
@@ -125,7 +130,7 @@ input UserCreateInput {
   name: String
   email: String
   password: String
-  posts: PostRelateToManyInput
+  posts: PostRelateToManyForCreateInput
 }
 
 input UsersCreateInput {
@@ -136,18 +141,26 @@ type Post_content_DocumentField {
   document(hydrateRelationships: Boolean! = false): JSON!
 }
 
-input UserRelateToOneInput {
+input UserRelateToOneForUpdateInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
-  disconnect: UserWhereUniqueInput
-  disconnectAll: Boolean
 }
 
-input TagRelateToManyInput {
-  create: [TagCreateInput]
-  connect: [TagWhereUniqueInput]
-  disconnect: [TagWhereUniqueInput]
-  disconnectAll: Boolean
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input TagRelateToManyForUpdateInput {
+  create: [TagCreateInput!]! = []
+  connect: [TagWhereUniqueInput!]! = []
+  disconnect: [TagWhereUniqueInput!]! = []
+  disconnectAll: Boolean! = false
+}
+
+input TagRelateToManyForCreateInput {
+  create: [TagCreateInput!]! = []
+  connect: [TagWhereUniqueInput!]! = []
 }
 
 """
@@ -258,8 +271,8 @@ input PostUpdateInput {
   status: String
   content: JSON
   publishDate: String
-  author: UserRelateToOneInput
-  tags: TagRelateToManyInput
+  author: UserRelateToOneForUpdateInput
+  tags: TagRelateToManyForUpdateInput
 }
 
 input PostsUpdateInput {
@@ -272,8 +285,8 @@ input PostCreateInput {
   status: String
   content: JSON
   publishDate: String
-  author: UserRelateToOneInput
-  tags: TagRelateToManyInput
+  author: UserRelateToOneForCreateInput
+  tags: TagRelateToManyForCreateInput
 }
 
 input PostsCreateInput {
@@ -363,7 +376,7 @@ enum SortTagsBy {
 
 input TagUpdateInput {
   name: String
-  posts: PostRelateToManyInput
+  posts: PostRelateToManyForUpdateInput
 }
 
 input TagsUpdateInput {
@@ -373,7 +386,7 @@ input TagsUpdateInput {
 
 input TagCreateInput {
   name: String
-  posts: PostRelateToManyInput
+  posts: PostRelateToManyForCreateInput
 }
 
 input TagsCreateInput {

@@ -4,6 +4,15 @@ enum TaskPriorityType {
   high
 }
 
+input PersonRelateToOneForUpdateInput {
+  create: PersonCreateInput
+  connect: PersonWhereUniqueInput
+}
+
+input PersonRelateToOneForCreateInput {
+  create: PersonCreateInput
+  connect: PersonWhereUniqueInput
+}
 
 """
  A keystone list
@@ -52,33 +61,8 @@ input TaskWhereInput {
   finishBy_not_in: [String]
 }
 
-input PersonRelateToOneForCreateInput {
-  create: PersonCreateInput
-  connect: PersonWhereUniqueInput
-}
-
 input TaskWhereUniqueInput {
   id: ID!
-}
-
-input TaskRelateToManyForCreateInput {
-  create: [TaskCreateInput!]! = []
-  connect: [TaskWhereUniqueInput!]! = []
-}
-
-input TaskUpdateInput {
-  label: String
-  priority: TaskPriorityType
-  isComplete: Boolean
-  assignedTo: PersonRelateToOneForUpdateInput
-  finishBy: String
-}
-
-input PersonRelateToOneForUpdateInput {
-  create: PersonCreateInput
-  connect: PersonWhereUniqueInput
-  disconnect: PersonWhereUniqueInput
-  disconnectAll: Boolean
 }
 
 enum SortTasksBy {
@@ -93,6 +77,15 @@ enum SortTasksBy {
   finishBy_ASC
   finishBy_DESC
 }
+
+input TaskUpdateInput {
+  label: String
+  priority: TaskPriorityType
+  isComplete: Boolean
+  assignedTo: PersonRelateToOneForUpdateInput
+  finishBy: String
+}
+
 input TasksUpdateInput {
   id: ID!
   data: TaskUpdateInput
@@ -117,6 +110,10 @@ input TaskRelateToManyForUpdateInput {
   disconnectAll: Boolean! = false
 }
 
+input TaskRelateToManyForCreateInput {
+  create: [TaskCreateInput!]! = []
+  connect: [TaskWhereUniqueInput!]! = []
+}
 
 """
  A keystone list

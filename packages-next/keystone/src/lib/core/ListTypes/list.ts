@@ -136,8 +136,10 @@ export class List implements BaseKeystoneList {
       createInputName: `${_itemQueryName}CreateInput`,
       updateManyInputName: `${_listQueryName}UpdateInput`,
       createManyInputName: `${_listQueryName}CreateInput`,
-      relateToManyInputName: `${_itemQueryName}RelateToManyInput`,
-      relateToOneInputName: `${_itemQueryName}RelateToOneInput`,
+      relateToManyForUpdateInputName: `${_itemQueryName}RelateToManyForUpdateInput`,
+      relateToManyForCreateInputName: `${_itemQueryName}RelateToManyForCreateInput`,
+      relateToOneForUpdateInputName: `${_itemQueryName}RelateToOneForUpdateInput`,
+      relateToOneForCreateInputName: `${_itemQueryName}RelateToOneForCreateInput`,
     };
 
     this.adapter = adapter.newListAdapter(this.key, adapterConfig);

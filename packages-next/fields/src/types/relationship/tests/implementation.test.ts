@@ -30,7 +30,8 @@ class MockList {
   key: string;
   adapter: PrismaListAdapter;
   gqlNames: {
-    relateToOneInputName: string;
+    relateToOneForUpdateInputName: string;
+    relateToOneForCreateInputName: string;
     whereUniqueInputName: string;
     createInputName: string;
     relateToManyInputName: string;
@@ -53,7 +54,8 @@ class MockList {
       createInputName: `${ref}CreateInput`,
       whereUniqueInputName: `${ref}WhereUniqueInput`,
       relateToManyInputName: `${ref}RelateToManyInput`,
-      relateToOneInputName: `${ref}RelateToOneInput`,
+      relateToOneForUpdateInputName: `${ref}RelateToOneForUpdateInput`,
+      relateToOneForCreateInputName: `${ref}RelateToOneForCreateInput`,
       whereInputName: '',
       listQueryName: '',
       itemQueryName: '',

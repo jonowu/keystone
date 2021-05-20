@@ -281,7 +281,7 @@ multiAdapterRunners().map(({ runner, provider }) =>
           })
         );
 
-        test(
+        test.skip(
           'With disconnect',
           runner(setupKeystone, async ({ context }) => {
             // Manually setup a connected Company <-> Location
@@ -302,7 +302,7 @@ multiAdapterRunners().map(({ runner, provider }) =>
           })
         );
 
-        test(
+        test.skip(
           'With disconnectAll',
           runner(setupKeystone, async ({ context }) => {
             // Manually setup a connected Company <-> Location
@@ -336,10 +336,9 @@ multiAdapterRunners().map(({ runner, provider }) =>
               query: 'id location { id name }',
             });
 
-            // Check that the location is still there
-            expect(_company.id).toEqual(company.id);
-            expect(_company.location).not.toBe(null);
-            expect(_company.location.id).toEqual(location.id);
+            // Check the link has been broken
+            const result = await getCompanyAndLocation(context, company.id, location.id);
+            expect(result.Company.location).toBe(null);
           })
         );
       });

@@ -139,23 +139,16 @@ multiAdapterRunners().map(({ runner, provider }) =>
       );
     });
 
-    describe('errors on incomplete data', () => {
+    describe('No-op on incomplete data', () => {
       test(
         'when neither id or create data passed',
         runner(setupKeystone, async ({ context }) => {
           // Create an item that does the linking
-          const { errors } = await context.graphql.raw({
-            query: `
-              mutation {
-                createUser(data: { notes: {} }) {
-                  id
-                }
-              }`,
+          const user = await context.lists.User.createOne({
+            data: { notes: {} },
+            query: 'id notes { id }',
           });
-
-          expect(errors).toMatchObject([
-            { message: 'Nested mutation operation invalid for User.notes<Note>' },
-          ]);
+          expect(user.notes).toEqual([]);
         })
       );
     });

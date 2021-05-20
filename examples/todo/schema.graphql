@@ -4,12 +4,6 @@ enum TaskPriorityType {
   high
 }
 
-input PersonRelateToOneInput {
-  create: PersonCreateInput
-  connect: PersonWhereUniqueInput
-  disconnect: PersonWhereUniqueInput
-  disconnectAll: Boolean
-}
 
 """
  A keystone list
@@ -58,8 +52,33 @@ input TaskWhereInput {
   finishBy_not_in: [String]
 }
 
+input PersonRelateToOneForCreateInput {
+  create: PersonCreateInput
+  connect: PersonWhereUniqueInput
+}
+
 input TaskWhereUniqueInput {
   id: ID!
+}
+
+input TaskRelateToManyForCreateInput {
+  create: [TaskCreateInput!]! = []
+  connect: [TaskWhereUniqueInput!]! = []
+}
+
+input TaskUpdateInput {
+  label: String
+  priority: TaskPriorityType
+  isComplete: Boolean
+  assignedTo: PersonRelateToOneForUpdateInput
+  finishBy: String
+}
+
+input PersonRelateToOneForUpdateInput {
+  create: PersonCreateInput
+  connect: PersonWhereUniqueInput
+  disconnect: PersonWhereUniqueInput
+  disconnectAll: Boolean
 }
 
 enum SortTasksBy {
@@ -74,15 +93,6 @@ enum SortTasksBy {
   finishBy_ASC
   finishBy_DESC
 }
-
-input TaskUpdateInput {
-  label: String
-  priority: TaskPriorityType
-  isComplete: Boolean
-  assignedTo: PersonRelateToOneInput
-  finishBy: String
-}
-
 input TasksUpdateInput {
   id: ID!
   data: TaskUpdateInput
@@ -92,7 +102,7 @@ input TaskCreateInput {
   label: String
   priority: TaskPriorityType
   isComplete: Boolean
-  assignedTo: PersonRelateToOneInput
+  assignedTo: PersonRelateToOneForCreateInput
   finishBy: String
 }
 
@@ -100,12 +110,13 @@ input TasksCreateInput {
   data: TaskCreateInput
 }
 
-input TaskRelateToManyInput {
-  create: [TaskCreateInput]
-  connect: [TaskWhereUniqueInput]
-  disconnect: [TaskWhereUniqueInput]
-  disconnectAll: Boolean
+input TaskRelateToManyForUpdateInput {
+  create: [TaskCreateInput!]! = []
+  connect: [TaskWhereUniqueInput!]! = []
+  disconnect: [TaskWhereUniqueInput!]! = []
+  disconnectAll: Boolean! = false
 }
+
 
 """
  A keystone list
@@ -178,7 +189,7 @@ enum SortPeopleBy {
 
 input PersonUpdateInput {
   name: String
-  tasks: TaskRelateToManyInput
+  tasks: TaskRelateToManyForUpdateInput
 }
 
 input PeopleUpdateInput {
@@ -188,7 +199,7 @@ input PeopleUpdateInput {
 
 input PersonCreateInput {
   name: String
-  tasks: TaskRelateToManyInput
+  tasks: TaskRelateToManyForCreateInput
 }
 
 input PeopleCreateInput {

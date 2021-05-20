@@ -358,7 +358,7 @@ multiAdapterRunners().map(({ runner, provider }) =>
           })
         );
 
-        test(
+        test.skip(
           'With disconnect',
           runner(setupKeystone, async ({ context }) => {
             // Manually setup a connected Company <-> Location
@@ -381,7 +381,7 @@ multiAdapterRunners().map(({ runner, provider }) =>
           })
         );
 
-        test(
+        test.skip(
           'With disconnectAll',
           runner(setupKeystone, async ({ context }) => {
             // Manually setup a connected Company <-> Location
@@ -417,10 +417,10 @@ multiAdapterRunners().map(({ runner, provider }) =>
               query: 'id friend { id name }',
             });
 
-            // Check that the friend is still there
-            expect(_user.id).toEqual(user.id);
-            expect(_user.friend).not.toBe(null);
-            expect(_user.friend.id).toEqual(friend.id);
+            // Check the link has been broken
+            const result = await getUserAndFriend(context, user.id, friend.id);
+            expect(result.User.friend).toBe(null);
+            expect(result.Friend.friendOf).toBe(null);
           })
         );
       });

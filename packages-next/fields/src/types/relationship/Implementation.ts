@@ -310,22 +310,28 @@ export class Relationship<P extends string> extends Implementation<P> {
       if (this.many) {
         if (refList.access[schemaName].create) {
           operations.push(`# Provide data to create a set of new ${refList.key}. Will also connect.
-          create: [${refList.gqlNames.createInputName}]`);
+          create: [${refList.gqlNames.createInputName}!]! = []`);
         }
 
         operations.push(
           `# Provide a filter to link to a set of existing ${refList.key}.
-          connect: [${refList.gqlNames.whereUniqueInputName}]`,
-          `# Provide a filter to remove to a set of existing ${refList.key}.
-          disconnect: [${refList.gqlNames.whereUniqueInputName}]`,
-          `# Remove all ${refList.key} in this list.
-          disconnectAll: Boolean`
+          connect: [${refList.gqlNames.whereUniqueInputName}!]! = []`
         );
+        const updateOperations = [
+          `# Provide a filter to remove to a set of existing ${refList.key}.
+        disconnect: [${refList.gqlNames.whereUniqueInputName}!]! = []`,
+          `# Remove all ${refList.key} in this list.
+        disconnectAll: Boolean! = false`,
+        ];
         return [
-          `input ${refList.gqlNames.relateToManyInputName} {
-          ${operations.join('\n')}
+          `input ${refList.gqlNames.relateToManyForUpdateInputName} {
+          ${[...operations, ...updateOperations].join('\n')}
         }
       `,
+          `input ${refList.gqlNames.relateToManyForCreateInputName} {
+        ${operations.join('\n')}
+      }
+    `,
         ];
       } else {
         if (schemaAccess.create) {
@@ -335,14 +341,14 @@ export class Relationship<P extends string> extends Implementation<P> {
 
         operations.push(
           `# Provide a filter to link to an existing ${refList.key}.
-        connect: ${refList.gqlNames.whereUniqueInputName}`,
-          `# Provide a filter to remove to an existing ${refList.key}.
-        disconnect: ${refList.gqlNames.whereUniqueInputName}`,
-          `# Remove the existing ${refList.key} (if any).
-        disconnectAll: Boolean`
+        connect: ${refList.gqlNames.whereUniqueInputName}`
         );
         return [
-          `input ${refList.gqlNames.relateToOneInputName} {
+          `input ${refList.gqlNames.relateToOneForUpdateInputName} {
+          ${operations.join('\n')}
+        }
+      `,
+          `input ${refList.gqlNames.relateToOneForCreateInputName} {
           ${operations.join('\n')}
         }
       `,
@@ -363,16 +369,32 @@ export class Relationship<P extends string> extends Implementation<P> {
       schemaAccess.auth
     ) {
       if (this.many) {
-        return [`${this.path}: ${refList.gqlNames.relateToManyInputName}`];
+        return [`${this.path}: ${refList.gqlNames.relateToManyForUpdateInputName}`];
       } else {
-        return [`${this.path}: ${refList.gqlNames.relateToOneInputName}`];
+        return [`${this.path}: ${refList.gqlNames.relateToOneForUpdateInputName}`];
       }
     } else {
       return [];
     }
   }
   gqlCreateInputFields({ schemaName }: { schemaName: string }) {
-    return this.gqlUpdateInputFields({ schemaName });
+    const { refList } = this.tryResolveRefList();
+    const schemaAccess = refList.access[schemaName];
+    if (
+      schemaAccess.read ||
+      schemaAccess.create ||
+      schemaAccess.update ||
+      schemaAccess.delete ||
+      schemaAccess.auth
+    ) {
+      if (this.many) {
+        return [`${this.path}: ${refList.gqlNames.relateToManyForCreateInputName}`];
+      } else {
+        return [`${this.path}: ${refList.gqlNames.relateToOneForCreateInputName}`];
+      }
+    } else {
+      return [];
+    }
   }
   getBackingTypes() {
     return { [this.path]: { optional: true, type: 'string | null' } };

@@ -31,7 +31,7 @@ import { Implementation } from '@keystone-next/fields';
 import { Relationship } from '@keystone-next/fields/src/types/relationship/Implementation';
 import { keyToLabel, labelToPath, labelToClass, opToType, mapToFields } from './utils';
 import { HookManager } from './hooks';
-import { LimitsExceededError, throwAccessDenied } from './graphqlErrors';
+import { LimitsExceededError, throwAccessDenied, AccessDeniedError } from './graphqlErrors';
 
 type MutationState = { afterChangeStack: any[]; transaction: {} };
 
@@ -731,7 +731,12 @@ export class List implements BaseKeystoneList {
 
     await this.checkFieldAccess(operation, itemsToUpdate, context, { gqlName });
 
-    return Promise.all(data.map(d => this._createSingle(d.data, context, mutationState)));
+    const results = await Promise.allSettled(
+      data.map(d => this._createSingle(d.data, context, mutationState))
+    );
+    return results.map(result =>
+      result.status === 'fulfilled' ? Promise.resolve(result.value) : Promise.reject(result.reason)
+    );
   }
 
   async _createSingle(
@@ -853,31 +858,61 @@ export class List implements BaseKeystoneList {
     >[];
 
     // Only update those items which pass access control
-    const itemsToUpdate = zipObj({
+    const _itemsToUpdate = zipObj({
       existingItem: existingItems,
       id: existingItems.map(({ id }) => id), // itemId is taken from here in checkFieldAccess
       data: existingItems.map(({ id }) => data.find(d => d.id === id)!.data),
     }) as { existingItem: Record<string, any>; id: IdType; data: Record<string, any> }[];
 
-    // FIXME: We should do all of these in parallel and return *all* the field access violations
-    await this.checkFieldAccess(operation, itemsToUpdate, context, extraData);
+    // Put items to update back into the same order as the original IDs
+    const itemsToUpdateById = Object.fromEntries(_itemsToUpdate.map(o => [o.id, o]));
+    const itemsToUpdate = ids.map(id => itemsToUpdateById[id] || null);
 
+    // FIXME: We should do all of these in parallel and return *all* the field access violations
+    await this.checkFieldAccess(
+      operation,
+      itemsToUpdate.filter(x => !!x),
+      context,
+      extraData
+    );
+
+    let results: PromiseSettledResult<any>[] = [];
     if (this.adapter.parentAdapter.provider === 'sqlite') {
       // We perform these operations sequentially as a workaround for a connection
       // timeout bug that happens in prisma+sqlite: https://github.com/prisma/prisma/issues/2955
-      const ret = [];
       for (const item of itemsToUpdate) {
-        const { existingItem, id, data } = item;
-        ret.push(await this._updateSingle(id, data, existingItem, context, mutationState));
+        if (item === null) {
+          // The item either didn't exist, or was filtered out by access control
+          results.push({
+            status: 'rejected',
+            reason: new AccessDeniedError({ data: { type: 'mutation' } }),
+          });
+        } else {
+          const { existingItem, id, data } = item;
+          try {
+            const result = await this._updateSingle(id, data, existingItem, context, mutationState);
+            results.push({ status: 'fulfilled', value: result });
+          } catch (e) {
+            results.push({ status: 'rejected', reason: e });
+          }
+        }
       }
-      return ret;
     } else {
-      return Promise.all(
-        itemsToUpdate.map(({ existingItem, id, data }) =>
-          this._updateSingle(id, data, existingItem, context, mutationState)
-        )
+      results = await Promise.allSettled(
+        itemsToUpdate.map(item => {
+          if (item === null) {
+            // The item either didn't exist, or was filtered out by access control
+            return new AccessDeniedError({ data: { type: 'mutation' } });
+          } else {
+            const { existingItem, id, data } = item;
+            return this._updateSingle(id, data, existingItem, context, mutationState);
+          }
+        })
       );
     }
+    return results.map(result =>
+      result.status === 'fulfilled' ? Promise.resolve(result.value) : Promise.reject(result.reason)
+    );
   }
 
   async _updateSingle(
@@ -964,21 +999,47 @@ export class List implements BaseKeystoneList {
       itemIds: ids,
     });
 
-    const existingItems = (await this.getAccessControlledItems(ids, access)) as any[];
+    const _existingItems = (await this.getAccessControlledItems(ids, access)) as any[];
 
+    // Put items to update back into the same order as the original IDs
+    const existingItemsById = Object.fromEntries(_existingItems.map(o => [o.id, o]));
+    const existingItems = ids.map(id => existingItemsById[id] || null);
+
+    let results: PromiseSettledResult<any>[] = [];
     if (this.adapter.parentAdapter.provider === 'sqlite') {
       // We perform these operations sequentially as a workaround for a connection
       // timeout bug that happens in prisma+sqlite: https://github.com/prisma/prisma/issues/2955
-      const ret = [];
       for (const existingItem of existingItems) {
-        ret.push(await this._deleteSingle(existingItem, context, mutationState));
+        if (existingItem === null) {
+          // The item either didn't exist, or was filtered out by access control
+          results.push({
+            status: 'rejected',
+            reason: new AccessDeniedError({ data: { type: 'mutation' } }),
+          });
+        } else {
+          try {
+            const result = await this._deleteSingle(existingItem, context, mutationState);
+            results.push({ status: 'fulfilled', value: result });
+          } catch (e) {
+            results.push({ status: 'rejected', reason: e });
+          }
+        }
       }
-      return ret;
     } else {
-      return Promise.all(
-        existingItems.map(existingItem => this._deleteSingle(existingItem, context, mutationState))
+      results = await Promise.allSettled(
+        existingItems.map(existingItem => {
+          if (existingItem === null) {
+            // The item either didn't exist, or was filtered out by access control
+            return new AccessDeniedError({ data: { type: 'mutation' } });
+          } else {
+            return this._deleteSingle(existingItem, context, mutationState);
+          }
+        })
       );
     }
+    return results.map(result =>
+      result.status === 'fulfilled' ? Promise.resolve(result.value) : Promise.reject(result.reason)
+    );
   }
 
   async _deleteSingle(

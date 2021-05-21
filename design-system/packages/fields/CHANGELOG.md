@@ -1,5 +1,11 @@
 # @keystone-ui/fields
 
+## 4.1.0
+
+### Minor Changes
+
+- [#5761](https://github.com/keystonejs/keystone/pull/5761) [`3a7acc2c5`](https://github.com/keystonejs/keystone/commit/3a7acc2c5114fbcbde994d1f4c6cc0b21c572ec0) Thanks [@gwyneplaine](https://github.com/gwyneplaine)! - Added as prop to FieldContainer component.
+
 ## 4.0.0
 
 ### Major Changes

@@ -1,6 +1,6 @@
 {
   "name": "@keystone-next/website",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -17,7 +17,7 @@
     "@keystone-next/fields-document": "^6.0.0",
     "@keystone-ui/button": "^5.0.0",
     "@keystone-ui/core": "^3.0.0",
-    "@keystone-ui/fields": "^4.0.0",
+    "@keystone-ui/fields": "^4.1.0",
     "@keystone-ui/icons": "^4.0.0",
     "@keystone-ui/notice": "^4.0.0",
     "@keystone-ui/toast": "^4.0.0",

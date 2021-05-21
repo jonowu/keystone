@@ -1,5 +1,16 @@
 # @keystone-next/auth
 
+## 25.0.1
+
+### Patch Changes
+
+- [#5766](https://github.com/keystonejs/keystone/pull/5766) [`a2553ab82`](https://github.com/keystonejs/keystone/commit/a2553ab823988921143c1ab3081f82fe067c564e) Thanks [@gwyneplaine](https://github.com/gwyneplaine)! - Added visually hidden labels to signin / welcome fields for better screen reader experience.
+
+- Updated dependencies [[`762f17823`](https://github.com/keystonejs/keystone/commit/762f1782334c9b7174c320182c753c215834ff7f), [`3a7acc2c5`](https://github.com/keystonejs/keystone/commit/3a7acc2c5114fbcbde994d1f4c6cc0b21c572ec0), [`19a756496`](https://github.com/keystonejs/keystone/commit/19a7564964d9dcdc94ecdda9c0a0e92c539eb309)]:
+  - @keystone-next/keystone@18.0.1
+  - @keystone-ui/fields@4.1.0
+  - @keystone-next/fields@9.0.1
+
 ## 25.0.0
 
 ### Major Changes

@@ -1,7 +1,7 @@
 {
   "name": "@keystone-next/test-utils-legacy",
   "description": "Common utilities used while testing @keystonejs/* packages.",
-  "version": "19.0.0",
+  "version": "19.0.1",
   "author": "The KeystoneJS Development Team",
   "license": "MIT",
   "main": "dist/test-utils-legacy.cjs.js",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@keystone-next/adapter-prisma-legacy": "^7.0.0",
-    "@keystone-next/keystone": "18.0.0",
+    "@keystone-next/keystone": "18.0.1",
     "express": "^4.17.1",
     "memoize-one": "^5.2.1",
     "supertest-light": "^1.0.3"

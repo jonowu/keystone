@@ -1,5 +1,15 @@
 # @keystone-next/fields
 
+## 9.0.1
+
+### Patch Changes
+
+- [#5764](https://github.com/keystonejs/keystone/pull/5764) [`19a756496`](https://github.com/keystonejs/keystone/commit/19a7564964d9dcdc94ecdda9c0a0e92c539eb309) Thanks [@bladey](https://github.com/bladey)! - Adjusted fields GqlAuxQueries function to return any type to prevent build errors.
+
+- Updated dependencies [[`762f17823`](https://github.com/keystonejs/keystone/commit/762f1782334c9b7174c320182c753c215834ff7f), [`3a7acc2c5`](https://github.com/keystonejs/keystone/commit/3a7acc2c5114fbcbde994d1f4c6cc0b21c572ec0)]:
+  - @keystone-next/keystone@18.0.1
+  - @keystone-ui/fields@4.1.0
+
 ## 9.0.0
 
 ### Major Changes

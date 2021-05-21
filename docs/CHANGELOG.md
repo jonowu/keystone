@@ -1,5 +1,14 @@
 # @keystone-next/website
 
+## 3.0.1
+
+### Patch Changes
+
+- [#5771](https://github.com/keystonejs/keystone/pull/5771) [`51aca916b`](https://github.com/keystonejs/keystone/commit/51aca916b0fd03bdd9100e13acbb86f49b494c0f) Thanks [@raveling](https://github.com/raveling)! - New tutorial for Keystone Lite. First draft.
+
+- Updated dependencies [[`3a7acc2c5`](https://github.com/keystonejs/keystone/commit/3a7acc2c5114fbcbde994d1f4c6cc0b21c572ec0)]:
+  - @keystone-ui/fields@4.1.0
+
 ## 3.0.0
 
 ### Major Changes

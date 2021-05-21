@@ -1,5 +1,12 @@
 # @keystonejs/test-utils
 
+## 19.0.1
+
+### Patch Changes
+
+- Updated dependencies [[`762f17823`](https://github.com/keystonejs/keystone/commit/762f1782334c9b7174c320182c753c215834ff7f)]:
+  - @keystone-next/keystone@18.0.1
+
 ## 19.0.0
 
 ### Major Changes

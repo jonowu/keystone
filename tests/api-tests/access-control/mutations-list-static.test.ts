@@ -148,13 +148,21 @@ multiAdapterRunners().map(({ runner, provider }) =>
             },
           });
 
-          // Errors out before any users are created
-          expect(data!.createUsers).toBe(null);
+          // If one item errors, they all error, so they all return null
+          expect(data!.createUsers).toEqual([null, null, null, null, null]);
 
-          // A single error message for the whole operation
-          expect(errors).toHaveLength(1);
+          // Error messages for each item
+          expect(errors).toHaveLength(5);
           expect(errors![0].message).toEqual('You do not have access to this resource');
-          expect(errors![0].path).toEqual(['createUsers']);
+          expect(errors![0].path).toEqual(['createUsers', 0]);
+          expect(errors![1].message).toEqual('You do not have access to this resource');
+          expect(errors![1].path).toEqual(['createUsers', 1]);
+          expect(errors![2].message).toEqual('You do not have access to this resource');
+          expect(errors![2].path).toEqual(['createUsers', 2]);
+          expect(errors![3].message).toEqual('You do not have access to this resource');
+          expect(errors![3].path).toEqual(['createUsers', 3]);
+          expect(errors![4].message).toEqual('You do not have access to this resource');
+          expect(errors![4].path).toEqual(['createUsers', 4]);
 
           // No users should exist in the database
           const users = await context.lists.User.findMany();
@@ -191,13 +199,19 @@ multiAdapterRunners().map(({ runner, provider }) =>
             },
           });
 
-          // Errors out before any users are created
-          expect(data!.updateUsers).toBe(null);
+          // If one item errors, they all error, so they all return null
+          expect(data!.updateUsers).toEqual([null, null, null, null]);
 
-          // A single error message for the whole operation
-          expect(errors).toHaveLength(1);
+          // Error messages for each item
+          expect(errors).toHaveLength(4);
           expect(errors![0].message).toEqual('You do not have access to this resource');
-          expect(errors![0].path).toEqual(['updateUsers']);
+          expect(errors![0].path).toEqual(['updateUsers', 0]);
+          expect(errors![1].message).toEqual('You do not have access to this resource');
+          expect(errors![1].path).toEqual(['updateUsers', 1]);
+          expect(errors![2].message).toEqual('You do not have access to this resource');
+          expect(errors![2].path).toEqual(['updateUsers', 2]);
+          expect(errors![3].message).toEqual('You do not have access to this resource');
+          expect(errors![3].path).toEqual(['updateUsers', 3]);
 
           // All users should still exist in the database
           const _users = await context.lists.User.findMany({
@@ -236,13 +250,19 @@ multiAdapterRunners().map(({ runner, provider }) =>
             variables: { ids: [users[0].id, users[1].id, users[2].id, users[3].id] },
           });
 
-          // Errors out before any users are created
-          expect(data!.deleteUsers).toBe(null);
+          // If one item errors, they all error, so they all return null
+          expect(data!.deleteUsers).toEqual([null, null, null, null]);
 
-          // A single error message for the whole operation
-          expect(errors).toHaveLength(1);
+          // Error messages for each item
+          expect(errors).toHaveLength(4);
           expect(errors![0].message).toEqual('You do not have access to this resource');
-          expect(errors![0].path).toEqual(['deleteUsers']);
+          expect(errors![0].path).toEqual(['deleteUsers', 0]);
+          expect(errors![1].message).toEqual('You do not have access to this resource');
+          expect(errors![1].path).toEqual(['deleteUsers', 1]);
+          expect(errors![2].message).toEqual('You do not have access to this resource');
+          expect(errors![2].path).toEqual(['deleteUsers', 2]);
+          expect(errors![3].message).toEqual('You do not have access to this resource');
+          expect(errors![3].path).toEqual(['deleteUsers', 3]);
 
           // All users should still exist in the database
           const _users = await context.lists.User.findMany({

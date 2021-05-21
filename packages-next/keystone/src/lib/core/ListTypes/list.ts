@@ -339,6 +339,19 @@ export class List implements BaseKeystoneList {
     return access;
   }
 
+  async _returnListAccess(
+    context: KeystoneContext,
+    originalInput: Record<string, any> | undefined,
+    operation: 'create' | 'read' | 'update' | 'delete',
+    { gqlName, ...extraInternalData }: { gqlName?: string } & Record<string, any>
+  ) {
+    return context.getListAccessControlForUser(this.access, this.key, originalInput, operation, {
+      gqlName,
+      context,
+      ...extraInternalData,
+    });
+  }
+
   async getAccessControlledItem(
     id: IdType,
     access: any,
@@ -725,7 +738,11 @@ export class List implements BaseKeystoneList {
     const operation = 'create';
     const gqlName = this.gqlNames.createManyMutationName;
 
-    await this.checkListAccess(context, data, operation, { gqlName });
+    const access = await this._returnListAccess(context, data, operation, { gqlName });
+    if (!access) {
+      // Return an access denied error for all items
+      return data.map(() => Promise.reject(new AccessDeniedError({ data: { type: 'mutation' } })));
+    }
 
     const itemsToUpdate = data.map(d => ({ existingItem: undefined, data: d.data }));
 
@@ -851,7 +868,12 @@ export class List implements BaseKeystoneList {
     const ids = data.map(d => d.id);
     const extraData = { gqlName, itemIds: ids };
 
-    const access = await this.checkListAccess(context, data, operation, extraData);
+    const access = await this._returnListAccess(context, data, operation, extraData);
+    if (!access) {
+      // Return an access denied error for all items
+      return data.map(() => Promise.reject(new AccessDeniedError({ data: { type: 'mutation' } })));
+    }
+
     const existingItems = (await this.getAccessControlledItems(ids, access)) as Record<
       string,
       any
@@ -994,10 +1016,14 @@ export class List implements BaseKeystoneList {
     const operation = 'delete';
     const gqlName = this.gqlNames.deleteManyMutationName;
 
-    const access = await this.checkListAccess(context, undefined, operation, {
+    const access = await this._returnListAccess(context, undefined, operation, {
       gqlName,
       itemIds: ids,
     });
+    if (!access) {
+      // Return an access denied error for all items
+      return ids.map(() => Promise.reject(new AccessDeniedError({ data: { type: 'mutation' } })));
+    }
 
     const _existingItems = (await this.getAccessControlledItems(ids, access)) as any[];
 
